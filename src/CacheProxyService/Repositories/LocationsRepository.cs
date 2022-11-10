@@ -13,10 +13,13 @@ namespace CacheProxyService.Repositories;
 
 public class LocationsRepository : ILocationsRepository
 {
+    private readonly ILogger<LocationsRepository> _logger;
     private readonly SuggestClientAsync _api;
 
-    public LocationsRepository()
+    public LocationsRepository(ILogger<LocationsRepository> logger)
     {
+        _logger = logger;
+        
         const string dadataTokenEnvVariable = "DADATA_TOKEN";
         var token = Environment.GetEnvironmentVariable(dadataTokenEnvVariable);
         if (token == null)

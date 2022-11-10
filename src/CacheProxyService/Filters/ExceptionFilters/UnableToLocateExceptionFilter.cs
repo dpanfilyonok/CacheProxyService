@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CacheProxyService.Filters.ExceptionFilters;
 
-// TODO change it (or make generic)
+// TODO change it or make generic
 public class UnableToLocateExceptionFilter : ExceptionFilterAttribute
 {
     private readonly ILogger<UnableToLocateExceptionFilter> _logger;
