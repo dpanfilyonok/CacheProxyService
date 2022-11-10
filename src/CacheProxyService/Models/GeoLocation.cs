@@ -1,6 +1,3 @@
 ﻿namespace CacheProxyService.Models;
 
-public class GeoLocation
-{
-    public string Address { get; set; }
-}
+public record GeoLocation(string Address);
