@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CacheProxyService.Filters.ExceptionFilters;
 
-// TODO change it or make generic
 public class UnableToLocateExceptionFilter : ExceptionFilterAttribute
 {
+    private const int ErrorCode = 404;
     private readonly ILogger<UnableToLocateExceptionFilter> _logger;
 
     public UnableToLocateExceptionFilter(ILogger<UnableToLocateExceptionFilter> logger)
@@ -24,12 +24,12 @@ public class UnableToLocateExceptionFilter : ExceptionFilterAttribute
         {
             Title = "An error occurred",
             Detail = context.Exception.Message,
-            Status = 500,
-            Type = "https://httpstatuses.com/500"
+            Status = ErrorCode,
+            Type = $"https://httpstatuses.com/{ErrorCode}"
         };
         context.Result = new ObjectResult(error)
         {
-            StatusCode = 500
+            StatusCode = ErrorCode
         };
         context.ExceptionHandled = true;
     }

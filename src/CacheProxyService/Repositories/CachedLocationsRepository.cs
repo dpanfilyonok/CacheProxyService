@@ -6,19 +6,19 @@ namespace CacheProxyService.Repositories;
 
 public class CachedLocationsRepository : ILocationsRepository
 {
-    private readonly LocationsRepository _inner;
+    private readonly ILocationsRepository _inner;
     private readonly ILogger<CachedLocationsRepository> _logger;
     private readonly ConnectionMultiplexer _redis;
     
     // TODO take ILocationsRepository
-    public CachedLocationsRepository(LocationsRepository inner, ILogger<CachedLocationsRepository> logger)
+    public CachedLocationsRepository(LocationsRepositoryResolver resolver, ILogger<CachedLocationsRepository> logger)
     {
-        _inner = inner;
+        _inner = resolver(LocationsRepositoryResolverKey.NoCache);
         _logger = logger;
         _redis = ConnectionMultiplexer.Connect("localhost:6379");
     }
 
-    public async Task<GeoLocation> GetLocationAsync(GeoCoordinates coords)
+    public async Task<GeoLocation> GetAsync(GeoCoordinates coords)
     {
         var coordsJson = JsonConvert.SerializeObject(coords);
         
@@ -30,7 +30,7 @@ public class CachedLocationsRepository : ILocationsRepository
             return JsonConvert.DeserializeObject<GeoLocation>(value);
         }
         
-        var location = await _inner.GetLocationAsync(coords);
+        var location = await _inner.GetAsync(coords);
         _logger.LogInformation("Setting value to cache");
         db.StringSet(coordsJson, JsonConvert.SerializeObject(location));
         return location;

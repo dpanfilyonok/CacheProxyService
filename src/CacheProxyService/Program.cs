@@ -1,15 +1,25 @@
 using CacheProxyService.Repositories;
+using CacheProxyService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<ILocationService, LocationService>();
 builder.Services.AddSingleton<LocationsRepository>();
-builder.Services.AddSingleton<ILocationsRepository, CachedLocationsRepository>();
+builder.Services.AddSingleton<CachedLocationsRepository>();
+builder.Services.AddSingleton<LocationsRepositoryResolver>(serviceProvider => key =>
+{
+    return key switch
+    {
+        LocationsRepositoryResolverKey.Cache => serviceProvider.GetService<CachedLocationsRepository>(),
+        LocationsRepositoryResolverKey.NoCache => serviceProvider.GetService<LocationsRepository>()
+    };
+});
 
 var app = builder.Build();
 
@@ -34,3 +44,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

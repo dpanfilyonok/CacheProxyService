@@ -29,7 +29,7 @@ public class LocationsRepository : ILocationsRepository
         _api = new SuggestClientAsync(token);
     }
     
-    public async Task<GeoLocation> GetLocationAsync(GeoCoordinates coords)
+    public async Task<GeoLocation> GetAsync(GeoCoordinates coords)
     {
         SuggestResponse<Address>? result;
         try
