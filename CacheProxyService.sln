@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8C237FF5-A0C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheProxyService", "src\CacheProxyService\CacheProxyService.csproj", "{1CC1B6AE-26D7-444A-AA29-F0FC4F0CFCBF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F2CFC363-AE07-4B28-935E-E0F0A3DB61B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheProxyService.Tests", "tests\CacheProxyService.Tests\CacheProxyService.Tests.csproj", "{17B98A5B-0C6D-4F79-B452-1E2BCC19538C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{1CC1B6AE-26D7-444A-AA29-F0FC4F0CFCBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CC1B6AE-26D7-444A-AA29-F0FC4F0CFCBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CC1B6AE-26D7-444A-AA29-F0FC4F0CFCBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B98A5B-0C6D-4F79-B452-1E2BCC19538C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B98A5B-0C6D-4F79-B452-1E2BCC19538C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B98A5B-0C6D-4F79-B452-1E2BCC19538C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B98A5B-0C6D-4F79-B452-1E2BCC19538C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1CC1B6AE-26D7-444A-AA29-F0FC4F0CFCBF} = {8C237FF5-A0C9-472B-9074-ED68D7BFC8A5}
+		{17B98A5B-0C6D-4F79-B452-1E2BCC19538C} = {F2CFC363-AE07-4B28-935E-E0F0A3DB61B4}
 	EndGlobalSection
 EndGlobal

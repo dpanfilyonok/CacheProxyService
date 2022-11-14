@@ -8,19 +8,29 @@ public class CachedLocationsRepository : ILocationsRepository
 {
     private readonly ILocationsRepository _inner;
     private readonly ILogger<CachedLocationsRepository> _logger;
-    private readonly ConnectionMultiplexer _redis;
+    private readonly ConnectionMultiplexer? _redis;
     
-    // TODO take ILocationsRepository
-    public CachedLocationsRepository(LocationsRepositoryResolver resolver, ILogger<CachedLocationsRepository> logger)
+    public CachedLocationsRepository(LocationsRepositoryResolver resolver, ILogger<CachedLocationsRepository> logger, LocationsRepositoryResolverKey key)
     {
-        _inner = resolver(LocationsRepositoryResolverKey.NoCache);
+        _inner = resolver(key);
         _logger = logger;
-        _redis = ConnectionMultiplexer.Connect("localhost:6379");
+        try
+        {
+            _redis = ConnectionMultiplexer.Connect("localhost:6379");
+            _logger.LogInformation("Redis connented");
+        }
+        catch (Exception)
+        {
+            _redis = null;
+            _logger.LogInformation("Cannot connect to redis");
+        }
+        
     }
 
     public async Task<GeoLocation> GetAsync(GeoCoordinates coords)
     {
         var coordsJson = JsonConvert.SerializeObject(coords);
+        if (_redis == null) return await _inner.GetAsync(coords);
         
         var db = _redis.GetDatabase();
         string? value = await db.StringGetAsync(coordsJson);

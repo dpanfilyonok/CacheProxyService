@@ -9,9 +9,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<ILocationService, LocationService>();
+builder.Services.AddTransient<ILocationService, LocationService>(sp => new LocationService(
+    sp.GetRequiredService<LocationsRepositoryResolver>(),
+    sp.GetRequiredService<ILogger<LocationService>>(),
+    LocationsRepositoryResolverKey.Cache
+));
 builder.Services.AddSingleton<LocationsRepository>();
-builder.Services.AddSingleton<CachedLocationsRepository>();
+builder.Services.AddSingleton(sp => new CachedLocationsRepository(
+    sp.GetRequiredService<LocationsRepositoryResolver>(),
+    sp.GetRequiredService<ILogger<CachedLocationsRepository>>(),
+    LocationsRepositoryResolverKey.NoCache
+));
 builder.Services.AddSingleton<LocationsRepositoryResolver>(serviceProvider => key =>
 {
     return key switch

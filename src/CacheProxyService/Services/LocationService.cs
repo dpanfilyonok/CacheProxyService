@@ -8,9 +8,9 @@ public class LocationService : ILocationService
     private readonly ILocationsRepository _repo;
     private readonly ILogger<LocationService> _logger;
 
-    public LocationService(LocationsRepositoryResolver resolver, ILogger<LocationService> logger)
+    public LocationService(LocationsRepositoryResolver resolver, ILogger<LocationService> logger, LocationsRepositoryResolverKey key)
     {
-        _repo = resolver(LocationsRepositoryResolverKey.Cache);
+        _repo = resolver(key);
         _logger = logger;
     }
     

@@ -6,11 +6,6 @@ using Dadata.Model;
 
 namespace CacheProxyService.Repositories;
 
-/*{
-    "latitude": 55.7546025, 
-    "longitude": 37.62159949999999 
-}*/
-
 public class LocationsRepository : ILocationsRepository
 {
     private readonly ILogger<LocationsRepository> _logger;
