@@ -1,0 +1,28 @@
+name: Build And Test
+
+on: 
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Windows Build And Test
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build
+
+      - name: Test
+        run: dotnet test
