@@ -16,15 +16,16 @@ public class CachedLocationsRepository : ILocationsRepository
         _logger = logger;
         try
         {
-            _redis = ConnectionMultiplexer.Connect("localhost:6379");
+            const string redisUrlEnvVariable = "REDIS_URL";
+            var url = Environment.GetEnvironmentVariable(redisUrlEnvVariable) ?? "localhost:6379";
+            _redis = ConnectionMultiplexer.Connect(url);
             _logger.LogInformation("Redis connented");
         }
-        catch (Exception)
+        catch (Exception e)
         {
             _redis = null;
-            _logger.LogInformation("Cannot connect to redis");
+            _logger.LogError(e, "Cannot connect to redis");
         }
-        
     }
 
     public async Task<GeoLocation> GetAsync(GeoCoordinates coords)
