@@ -1,7 +1,6 @@
 using CacheProxyService.Filters.ExceptionFilters;
 using Microsoft.AspNetCore.Mvc;
 using CacheProxyService.Models;
-using CacheProxyService.Repositories;
 using CacheProxyService.Services;
 
 namespace CacheProxyService.Controllers;
